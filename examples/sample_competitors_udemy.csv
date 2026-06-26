@@ -1,0 +1,5 @@
+platform,title,instructor,url,price,rating,reviews,enrollments,duration_hours,lectures,level,language,last_updated,skills,modules,projects,certificate
+Udemy,The Complete Data Analysis Bootcamp,Jane Doe,https://www.udemy.com/course/example-1,$129.99,4.6,12450,98000,22.5,210,beginner,English,2025-11,"excel, sql, python, dashboards","intro, data cleaning, sql basics, visualization, capstone","sales dashboard, churn analysis",yes
+Udemy,Data Analytics for Beginners,John Smith,https://www.udemy.com/course/example-2,$94.99,4.4,3120,41000,12.0,95,beginner,English,2022-06,"excel, statistics","intro, excel, charts",,no
+Udemy,Advanced SQL for Analysts,Acme Academy,https://www.udemy.com/course/example-3,$149.99,4.7,8800,52000,18.0,160,advanced,English,2025-09,"sql, query optimization, warehousing","window functions, performance, modeling","analytics warehouse",yes
+Udemy,Power BI Masterclass,Data Pros,https://www.udemy.com/course/example-4,$119.99,4.5,15600,120000,16.5,140,mixed,English,2024-12,"power bi, dax, modeling","dax, reports, dashboards","executive dashboard",yes

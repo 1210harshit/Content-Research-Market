@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "course-market-intelligence": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/ABSOLUTE/PATH/course-market-intelligence-mcp",
+        "run",
+        "course-market-intelligence"
+      ],
+      "env": {
+        "GOOGLE_CSE_API_KEY": "your_key_here",
+        "GOOGLE_CSE_ENGINE_ID": "your_engine_id_here",
+        "BING_SEARCH_API_KEY": "your_key_here",
+        "YOUTUBE_API_KEY": "your_key_here",
+        "UDEMY_CLIENT_ID": "your_client_id_here",
+        "UDEMY_CLIENT_SECRET": "your_client_secret_here"
+      }
+    }
+  }
+}

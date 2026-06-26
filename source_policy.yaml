@@ -1,0 +1,108 @@
+# source_policy.yaml
+#
+# Compliance-first source policy for course-market-intelligence-mcp.
+#
+# This file is the single source of truth for WHAT the MCP is allowed to do
+# against each domain. The MCP MUST refuse or skip any source/collection-mode
+# combination that is not explicitly allowed here.
+#
+# Collection mode vocabulary:
+#   official_api              - vendor's official or approved API
+#   affiliate_api             - vendor affiliate program API (e.g. Udemy Affiliate)
+#   partner_api               - approved partner program API
+#   partner_approved          - partner access confirmed in writing
+#   customer_export           - export pulled by an authorized customer of the platform
+#   youtube_data_api          - YouTube Data API specifically
+#   bing_search_api           - Bing Web Search API specifically
+#   search_api                - compliant 3rd-party search API (Google CSE, Bing, SerpAPI, DataForSEO SERP)
+#   seo_api                   - approved SEO/trend API or export
+#   public_metadata           - allowed public page metadata (only when public_scraping allows)
+#   public_metadata_if_allowed- public metadata permitted ONLY after robots.txt + ToS check passes
+#   manual_csv                - user-uploaded CSV/XLSX export
+#   internal_data             - company-owned internal data upload
+#
+# public_scraping values:
+#   true                      - public page fetching permitted (still robots.txt gated)
+#   false                     - never fetch public pages programmatically
+#   policy_check_required     - only after check_source_policy confirms robots.txt + ToS allow it
+#   "false unless ..."        - blocked unless the stated written condition is confirmed
+
+defaults:
+  allowed_modes:
+    - search_api
+    - manual_csv
+    - internal_data
+  public_scraping: policy_check_required
+  rate_limit_seconds: 2
+  reason: >
+    Unknown domains default to least-privilege: search APIs and manual uploads
+    only, with public scraping requiring an explicit robots.txt + ToS check.
+
+domains:
+  linkedin.com:
+    allowed_modes: [official_api, manual_csv, search_api]
+    public_scraping: false
+    reason: LinkedIn restricts scraping/crawling and automated copying of services.
+
+  coursera.org:
+    allowed_modes: [official_api, partner_approved, manual_csv, search_api]
+    public_scraping: "false unless written permission is confirmed"
+    reason: Coursera restricts scraping/data extraction without prior written consent.
+
+  udemy.com:
+    allowed_modes: [official_api, affiliate_api, manual_csv, search_api, public_metadata_if_allowed]
+    public_scraping: policy_check_required
+    notes: Prefer Udemy Affiliate API or approved partner access.
+
+  go1.com:
+    allowed_modes: [official_api, partner_api, customer_export, manual_csv, search_api]
+    public_scraping: policy_check_required
+    notes: Prefer approved Go1 partner/customer access or manual exports.
+
+  edx.org:
+    allowed_modes: [search_api, manual_csv, public_metadata_if_allowed]
+    public_scraping: policy_check_required
+
+  futurelearn.com:
+    allowed_modes: [search_api, manual_csv, public_metadata_if_allowed]
+    public_scraping: policy_check_required
+
+  classcentral.com:
+    allowed_modes: [search_api, public_metadata_if_allowed, manual_csv]
+    public_scraping: policy_check_required
+
+  edflex.com:
+    allowed_modes: [partner_api, customer_export, manual_csv, search_api]
+    public_scraping: policy_check_required
+    notes: Aggregator; prefer partner/customer access or manual exports.
+
+  youtube.com:
+    allowed_modes: [youtube_data_api, search_api, manual_csv]
+    public_scraping: false
+    notes: Use YouTube Data API, not scraping.
+
+  google.com:
+    allowed_modes: [search_api, manual_csv]
+    public_scraping: false
+    notes: Use search API, not raw Google scraping.
+
+  bing.com:
+    allowed_modes: [bing_search_api, manual_csv]
+    public_scraping: false
+
+  reddit.com:
+    allowed_modes: [official_api, search_api, public_metadata_if_allowed]
+    public_scraping: policy_check_required
+    notes: Use for learner pain points only when compliant. Never collect personal data.
+
+  quora.com:
+    allowed_modes: [search_api, manual_csv]
+    public_scraping: false
+    notes: Use search snippets only where allowed.
+
+# Generic class of sources matched by source_type rather than exact domain.
+source_classes:
+  job_boards:
+    allowed_modes: [official_api, search_api, manual_csv]
+    public_scraping: "false unless allowed by the specific job board"
+    reason: Most job boards restrict automated scraping; prefer official APIs.
